@@ -145,6 +145,12 @@ bool BlockFilterIndex::CustomCommit(CDBBatch& batch)
 {
     const FlatFilePos& pos = m_next_filter_pos;
 
+    if (m_syned_) {
+        // Set it to false, as i only want it to pause once
+        m_syned_ = false;
+        std::this_thread::sleep_for(std::chrono::seconds(5));
+    }
+
     // Flush current filter file to disk.
     AutoFile file{m_filter_fileseq->Open(pos)};
     if (file.IsNull()) {

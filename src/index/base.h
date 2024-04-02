@@ -60,6 +60,10 @@ protected:
         void WriteBestBlock(CDBBatch& batch, const CBlockLocator& locator);
     };
 
+    // Use this variable to make only thread basic block filter index pause, and only pause once
+    // As scheduler may also call Commit(), if pause every call, it will not make race window bigger
+    std::atomic<bool> m_syned_{false};
+
 private:
     /// Whether the index has been initialized or not.
     std::atomic<bool> m_init{false};
