@@ -440,6 +440,7 @@ public:
      * This lock protects all the fields added by CWallet.
      */
     mutable RecursiveMutex cs_wallet;
+    char padding[16];
 
     WalletDatabase& GetDatabase() const override
     {
